@@ -14,7 +14,26 @@ function verifyToken(authorization) {
     return jwt.verify(token, constant.secretKey)
 }
 
+function getQuery(pool, reject, resolve, sql) {
+    pool.getConnection((err, con) => {
+        if (err) {
+            reject(err)
+        } else {
+            con.query(sql, (err, data) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    const result = JSON.parse(JSON.stringify(data))
+                    resolve(result)
+                }
+                con.release()
+            })
+        }
+    })
+}
+
 module.exports = {
     md5,
-    verifyToken
+    verifyToken,
+    getQuery
 }

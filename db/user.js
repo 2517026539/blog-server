@@ -1,4 +1,5 @@
 const pool = require('./index')
+const { getQuery } = require('./../utils')
 
 //新增管理员用户
 function add_user(sql) {
@@ -39,20 +40,7 @@ function verifyUser(sql) {
 //获取用户信息
 function queryUserInfo(sql) {
     return new Promise((resolve, reject) => {
-        pool.getConnection((err, con) => {
-            if (err) {
-                reject(err)
-            } else {
-                con.query(sql, (err, result) => {
-                    if (err) {
-                        reject(err)
-                    } else {
-                        const data = JSON.parse(JSON.stringify(result))
-                        resolve(data)
-                    }
-                })
-            }
-        })
+        getQuery(pool,reject,resolve,sql)
     })
 }
 
