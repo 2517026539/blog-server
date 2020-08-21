@@ -43,6 +43,7 @@ function getInfo(username) {
             }
         }).catch(err => {
             reject(err)
+
         })
     })
 }

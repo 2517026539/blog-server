@@ -45,6 +45,7 @@ router.post('/login',[
                         expiresIn: constant.JWT_EXPIRED
                     }
                 )
+                console.log('login')
                 new Result({data: {token},msg: '登录成功'}).success(res)
             }
         }).catch(err => {
@@ -58,7 +59,7 @@ router.get('/info', (req, res, next) => {
     const authorization = req.headers.authorization
     const { username } = verifyToken(authorization)
     getInfo(username).then(data => {
-        console.log(data)
+        console.log('getInfo')
         new Result({data,msg: '请求成功'}).success(res)
     }).catch(err => {
         next(Boom.badImplementation(err))
