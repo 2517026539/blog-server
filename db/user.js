@@ -44,8 +44,16 @@ function queryUserInfo(sql) {
     })
 }
 
+//获取用户信息
+function getUser(sql) {
+    return new Promise((resolve, reject) => {
+        getQuery(pool,reject,resolve,sql)
+    })
+}
+
 module.exports = {
     add_user,
     verifyUser,
-    queryUserInfo
+    queryUserInfo,
+    getUser
 }

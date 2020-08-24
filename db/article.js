@@ -69,6 +69,25 @@ function update(sql) {
     })
 }
 
+function del(sql) {
+    return new Promise(((resolve, reject) => {
+        pool.getConnection((err, con) => {
+            if (err) {
+                reject(err)
+            } else {
+                con.query(sql, err => {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        resolve('文章删除成功')
+                    }
+                    con.release()
+                })
+            }
+        })
+    }))
+}
+
 module.exports = {
     pubArt,
     getSort,
@@ -76,5 +95,6 @@ module.exports = {
     getSum,
     getClass,
     getOne,
-    update
+    update,
+    del
 }

@@ -1,4 +1,4 @@
-const { pubArt, getSort, getArticle, getSum, getClass, getOne, update } = require('./../db/article')
+const { pubArt, getSort, getArticle, getSum, getClass, getOne, update, del } = require('./../db/article')
 
 function pubArticle(data) {
     return new Promise((resolve, reject) => {
@@ -130,6 +130,28 @@ function updateArticle(article){
     })
 }
 
+function delArticle({id}) {
+    return new Promise(((resolve, reject) => {
+        const sql = `delete from \`article\` where \`id\` = '${id}'`
+        del(sql).then(result => {
+            resolve(result)
+        }).catch(err => {
+            reject(err)
+        })
+    }))
+}
+
+function updatePub({id, pub}) {
+    return new Promise((resolve, reject) => {
+        const sql = `update article set \`pub\` = '${pub}' where \`id\` = '${id}'`
+        update(sql).then(result => {
+            resolve(result)
+        }).catch(err => {
+            reject(err)
+        })
+    })
+}
+
 module.exports = {
     pubArticle,
     getSortList,
@@ -137,5 +159,7 @@ module.exports = {
     getClassification,
     saveArticle,
     getOneArticle,
-    updateArticle
+    updateArticle,
+    delArticle,
+    updatePub
 }

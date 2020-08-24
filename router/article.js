@@ -1,5 +1,5 @@
 const express = require('express')
-const { pubArticle, getSortList, getArticleList, getClassification, saveArticle, getOneArticle, updateArticle } = require('./../services/article')
+const { pubArticle, getSortList, getArticleList, getClassification, saveArticle, getOneArticle, updateArticle, delArticle, updatePub } = require('./../services/article')
 const Result = require('./../models/results')
 
 const router = express.Router()
@@ -32,7 +32,6 @@ router.get('/sort',(req, res, next) => {
 
 router.get('/list', (req, res, next) => {
     getArticleList(req.query).then(result => {
-        console.log(result)
         new Result({msg: '文章列表获取成功', data: result}).success(res)
     }).catch(err => {
         new Result({msg: '服务器出错'}).fail(res.status(500))
@@ -62,6 +61,22 @@ router.get('/id', (req, res ) => {
 router.post('/update', (req, res ) => {
     updateArticle(req.body).then(result => {
         new Result({msg: '文章更新成功'}).success(res)
+    }).catch(err => {
+        new Result({msg: '服务器出错'}).fail(res.status(500))
+    })
+})
+
+router.get('/del', (req, res) => {
+    delArticle(req.query).then(result => {
+        new Result({msg: '文章删除成功'}).success(res)
+    }).catch(err => {
+        new Result({msg: '服务器出错'}).fail(res.status(500))
+    })
+})
+
+router.get('/updatepub', (req, res) => {
+    updatePub(req.query).then(result => {
+        new Result({msg: '成功'}).success(res)
     }).catch(err => {
         new Result({msg: '服务器出错'}).fail(res.status(500))
     })

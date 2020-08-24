@@ -1,6 +1,6 @@
 const { md5 } = require('./../utils')
 const { PWD_SALT } = require('./../utils/constant')
-const { add_user, verifyUser, queryUserInfo } = require('./../db/user')
+const { add_user, verifyUser, queryUserInfo, getUser } = require('./../db/user')
 const jwt = require('jsonwebtoken')
 
 //新增管理者
@@ -31,7 +31,7 @@ function login(user) {
     })
 }
 
-//获取用户信息数据
+//获取用户信息数据（后台管理系统）
 function getInfo(username) {
     return new Promise((resolve, reject) => {
         const sql = `select * from user_info where \`username\` = '${username}'`
@@ -48,8 +48,26 @@ function getInfo(username) {
     })
 }
 
+//获取用户信息数据（blog主页）
+function user(){
+    return new Promise((resolve, reject) => {
+        const sql = `select * from user`
+        queryUserInfo(sql).then(result => {
+            if (result.length === 0) {
+                reject('该用户名没有数据')
+            } else {
+                resolve(result[0])
+            }
+        }).catch(err => {
+            reject(err)
+
+        })
+    })
+}
+
 module.exports = {
     addAdmin,
     login,
-    getInfo
+    getInfo,
+    user
 }

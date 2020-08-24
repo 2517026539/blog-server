@@ -1,5 +1,7 @@
-const IMAGEPATH = 'D:/upload/image'
-const URLPATH = 'http://localhost:8089/'
+const isDevelopment = false
+
+const IMAGEPATH = isDevelopment?'D:/upload/image' : '/root/upload/image'
+const URLPATH = isDevelopment? 'http://localhost:8089' : 'http://39.103.143.209:80'
 
 module.exports = {
     CODE_ERROR: 0,

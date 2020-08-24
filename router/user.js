@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const { body, validationResult} = require('express-validator')
 const Boom = require('boom')
 const Result = require('./../models/results')
-const { addAdmin, login, getInfo } = require('./../services/user')
+const { addAdmin, login, getInfo, user } = require('./../services/user')
 const constant = require('./../utils/constant')
 const { verifyToken } = require('./../utils')
 
@@ -65,5 +65,15 @@ router.get('/info', (req, res, next) => {
         next(Boom.badImplementation(err))
     })
 })
+
+router.get('/get', (req, res, next) => {
+    user().then(data => {
+        new Result({data,msg: '请求成功'}).success(res)
+    }).catch(err => {
+        next(Boom.badImplementation(err))
+    })
+})
+
+
 
 module.exports = router
